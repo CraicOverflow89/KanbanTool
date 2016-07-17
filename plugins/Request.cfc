@@ -7,9 +7,8 @@ component name = "Request" output = "false"
     * @verb the http verb (GET, POST)
     * @fields an array of structs used in a post (NAME, VALUE, TYPE (FORMFIELD))
 	* @content the request content used in a put request
-    * @expect the type of response to expect (STRING, BOOLEAN, INTEGER, JSON, PREFIX)
     */
-	public any function request(required string url, string verb = "GET", array fields = [], string content = "", string expect = "STRING")
+	public any function request(required string url, string verb = "GET", array fields = [], string content = "")
 	{
 		if(!arguments.verb == "GET" && !arguments.verb == "POST" && !arguments.verb == "PUT") {throw(message = "Request only supports GET, POST and PUT verbs!", type = "Unsupported verb");}
 		var myHttp = new Http();
@@ -27,26 +26,7 @@ component name = "Request" output = "false"
             }
         }
 		if(arguments.verb == "PUT") {myHttp.addParam(type = "BODY", value = arguments.content);}
-		var result = myHttp.send().getPrefix();
-        if(arguments.expect == "PREFIX") {return result;}
-        result = result.fileContent;
-		if(arguments.expect == "BOOLEAN")
-		{
-			if(result == "TRUE") {return true;}
-			if(result == "FALSE") {return false;}
-			return "";
-		}
-		if(arguments.expect == "INTEGER")
-		{
-			try {return int(result);}
-			catch(any ex) {return 0;}
-		}
-		if(arguments.expect == "JSON")
-		{
-			try {return deserializeJson(result);}
-			catch(any ex) {return "";}
-		}
-		return result;
+        return myHttp.send().getPrefix().fileContent;
 	}
 
 }
