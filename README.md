@@ -3,7 +3,7 @@ KanbanTool
 API Wrapper for the KanbanTool website written in CFML.
 
 #### Setup
-To get this working you need to get your domain and token info into auth{}.
+To get this working you need to get your domain and token info into auth{} (see [this article](http://kanbantool.com/about/api#getting-started) for help on getting your token).
 Check out the data you get from calling ```infoAccount``` and go from there.
 
 #### Further Reading
