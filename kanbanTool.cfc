@@ -34,7 +34,9 @@ component name = "kanbanTool" output = "false"
 	public struct function infoAccount(required struct auth)
 	{
 		authenticationValidate(arguments.auth);
-		return {account:deserializeJson(udf_request("https://" & arguments.auth.domain & ".kanbantool.com/api/v1/boards.json?api_token=" & arguments.auth.token))};
+		var response = udf_request("https://" & arguments.auth.domain & ".kanbantool.com/api/v1/boards.json?api_token=" & arguments.auth.token);
+		if(findNoCase("Connection Failure", response)) {throw(message = "Connection Failure... check your authentication details." type = "Connection Failure");}
+		return {account:deserializeJson(response)};
 	}
 
 	/**
