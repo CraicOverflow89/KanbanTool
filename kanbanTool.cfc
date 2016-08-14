@@ -1,7 +1,7 @@
 component name = "kanbanTool" output = "false"
 {
 	// Map Request UDF
-	udf_request = new plugins.request();
+	udf_request = new plugins.request().request;
 
 	/**
 	* @hint loads details from txt file (expecting "DOMAIN|TOKEN" format)
